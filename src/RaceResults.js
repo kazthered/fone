@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Collapse } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, CircularProgress, Collapse } from '@mui/material';
 import SectionHeader from './SectionHeader';
 
 function ResultsContainer({ children }) {
@@ -8,18 +8,40 @@ function ResultsContainer({ children }) {
 
 function RaceResults() {
   const [raceResults, setRaceResults] = useState([]);
-  const [raceVenue, setRaceVenue] = useState('');
+  const [raceVenue, setRaceVenue] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchRaceResults = async () => {
-      const data = await fetch('https://api.jolpi.ca/ergast/f1/2025/last/results');
-      const jsonData = await data.json();
-      setRaceResults(jsonData.MRData.RaceTable.Races.at(0).Results);
-      setRaceVenue(jsonData.MRData.RaceTable.Races.at(0).Circuit.circuitName);
+      setError(null);
+      try {
+        const data = await fetch('https://api.jolpi.ca/ergast/f1/2026/last/results');
+        const jsonData = await data.json();
+        if (jsonData.MRData.RaceTable === undefined) {
+          setRaceResults(jsonData.MRData.RaceTable.Races.at(0).Results);
+          setRaceVenue(jsonData.MRData.RaceTable.Races.at(0).Circuit.circuitName);
+        } else {
+          setError('There are no driver standings available at this time.');
+        }
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchRaceResults();
   }, []);
+
+  if (isLoading) {
+    return <CircularProgress />;
+  }
+
+  if (error) {
+    return <div>Error fetching: {error} - The season just started or a network error occurred, probably.</div>;
+  }
+  
 
   return (
     <ResultsContainer>

@@ -17,9 +17,13 @@ function DriverStandings() {
       setIsLoading(true);
       setError(null);
       try {
-        const data = await fetch('https://api.jolpi.ca/ergast/f1/2025/driverstandings');
+        const data = await fetch('https://api.jolpi.ca/ergast/f1/2026/driverstandings');
         const jsonData = await data.json();
-        setDriverStandings(jsonData.MRData.StandingsTable.StandingsLists[0].DriverStandings);
+        if (jsonData.MRData.StandingsTable === undefined) {
+          setDriverStandings(jsonData.MRData.StandingsTable.StandingsLists[0].Driver);
+        } else {
+          setError('There are no driver standings available at this time.');
+        }
       } catch (error) {
         setError(error.message);
       } finally {
@@ -34,7 +38,7 @@ function DriverStandings() {
   }
 
   if (error) {
-    return <div>Error fetching  {error}</div>;
+    return <div>Error fetching: {error} - The season just started or a network error occurred, probably.</div>;
   }
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Collapse } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, CircularProgress, Collapse } from '@mui/material';
 import SectionHeader from './SectionHeader';
 
 function StandingsContainer({ children }) {
@@ -8,16 +8,38 @@ function StandingsContainer({ children }) {
 
 function ConstructorStandings() {
   const [constructorStandings, setConstructorStandings] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchConstructorStandings = async () => {
-      const data = await fetch('https://api.jolpi.ca/ergast/f1/2025/constructorstandings');
-      const jsonData = await data.json();
-      setConstructorStandings(jsonData.MRData.StandingsTable.StandingsLists[0].ConstructorStandings);
+      setIsLoading(true);
+      setError(null);
+      try {
+        const data = await fetch('https://api.jolpi.ca/ergast/f1/2026/constructorstandings');
+        const jsonData = await data.json();
+        if (jsonData.MRData.StandingsTable === undefined) {
+          setConstructorStandings(jsonData.MRData.StandingsTable.StandingsLists[0].ConstructorStandings);
+        } else {
+          setError('There are no constructor standings available at this time.');
+        }
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchConstructorStandings();
   }, []);
+
+    if (isLoading) {
+      return <CircularProgress />;
+    }
+  
+    if (error) {
+      return <div>Error fetching: {error} - The season just started or a network error occurred, probably.</div>;
+    }
 
   return (
     <StandingsContainer>
