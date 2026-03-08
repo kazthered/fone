@@ -39,14 +39,14 @@ function RaceResults() {
   } else if (error) {
     return(
     <ResultsContainer>
-      <SectionHeader title={`Previous Race Standings (${raceVenue})`} onClick={() => setOpen(!open)}/>
+      <SectionHeader title={`Previous Race Standings (${raceVenue === undefined ? raceVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
       <div>Error fetching: {error} - The season just started or a network error occurred, probably.</div>
     </ResultsContainer>
     );
   } else {
     return (
     <ResultsContainer>
-      <SectionHeader title={`Previous Race Standings (${raceVenue})`} onClick={() => setOpen(!open)}/>
+      <SectionHeader title={`Previous Race Standings (${raceVenue === undefined ? raceVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Table table-layout="fixed">
           <TableHead>
