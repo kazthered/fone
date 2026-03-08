@@ -20,7 +20,7 @@ function DriverStandings() {
         const data = await fetch('https://api.jolpi.ca/ergast/f1/2026/driverstandings');
         const jsonData = await data.json();
         if (jsonData.MRData.StandingsTable === undefined) {
-          setDriverStandings(jsonData.MRData.StandingsTable.StandingsLists[0].Driver);
+          setDriverStandings(jsonData.MRData.StandingsTable.StandingsLists[0].DriverStandings);
         } else {
           setError('There are no driver standings available at this time.');
         }
