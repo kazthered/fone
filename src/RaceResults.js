@@ -23,7 +23,7 @@ function RaceResults() {
           setRaceResults(jsonData.MRData.RaceTable.Races.at(0).Results);
           setRaceVenue(jsonData.MRData.RaceTable.Races.at(0).Circuit.circuitName);
         } else {
-          setError('There are no driver standings available at this time.');
+          setError('There are no race results available at this time.');
         }
       } catch (error) {
         setError(error.message);
