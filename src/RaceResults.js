@@ -17,9 +17,9 @@ function RaceResults() {
     const fetchRaceResults = async () => {
       setError(null);
       try {
-        const data = await fetch('https://api.jolpi.ca/ergast/f1/2026/last/results');
+        const data = await fetch('https://api.jolpi.ca/ergast/f1/2026/results/');
         const jsonData = await data.json();
-        if (!jsonData.MRData.RaceTable === undefined) {
+        if (jsonData.MRData.RaceTable !== undefined) {
           setRaceResults(jsonData.MRData.RaceTable.Races.at(0).Results);
           setRaceVenue(jsonData.MRData.RaceTable.Races.at(0).Circuit.circuitName);
         } else {
@@ -39,14 +39,14 @@ function RaceResults() {
   } else if (error) {
     return(
     <ResultsContainer>
-      <SectionHeader title={`Previous Race Standings (${raceVenue === undefined ? raceVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
+      <SectionHeader title={`Previous Race Standings (${raceVenue !== undefined ? raceVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
       <div>Error fetching: {error} - The season just started or a network error occurred, probably.</div>
     </ResultsContainer>
     );
   } else {
     return (
     <ResultsContainer>
-      <SectionHeader title={`Previous Race Standings (${raceVenue === undefined ? raceVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
+      <SectionHeader title={`Previous Race Standings (${raceVenue !== undefined ? raceVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Table table-layout="fixed">
           <TableHead>

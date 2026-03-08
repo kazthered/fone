@@ -17,9 +17,9 @@ function ConstructorStandings() {
       setIsLoading(true);
       setError(null);
       try {
-        const data = await fetch('https://api.jolpi.ca/ergast/f1/2026/constructorstandings');
+        const data = await fetch('https://api.jolpi.ca/ergast/f1/2026/constructorstandings/');
         const jsonData = await data.json();
-        if (!jsonData.MRData.StandingsTable === undefined) {
+        if (jsonData.MRData.StandingsTable !== undefined) {
           setConstructorStandings(jsonData.MRData.StandingsTable.StandingsLists[0].ConstructorStandings);
         } else {
           setError('There are no constructor standings available at this time.');
