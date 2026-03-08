@@ -19,7 +19,7 @@ function RaceResults() {
       try {
         const data = await fetch('https://api.jolpi.ca/ergast/f1/2026/last/results');
         const jsonData = await data.json();
-        if (jsonData.MRData.RaceTable === undefined) {
+        if (!jsonData.MRData.RaceTable === undefined) {
           setRaceResults(jsonData.MRData.RaceTable.Races.at(0).Results);
           setRaceVenue(jsonData.MRData.RaceTable.Races.at(0).Circuit.circuitName);
         } else {
