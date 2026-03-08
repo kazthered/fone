@@ -36,14 +36,15 @@ function RaceResults() {
 
   if (isLoading) {
     return <CircularProgress />;
-  }
-
-  if (error) {
-    return <div>Error fetching: {error} - The season just started or a network error occurred, probably.</div>;
-  }
-  
-
-  return (
+  } else if (error) {
+    return(
+    <ResultsContainer>
+      <SectionHeader title={`Previous Race Standings (${raceVenue})`} onClick={() => setOpen(!open)}/>
+      <div>Error fetching: {error} - The season just started or a network error occurred, probably.</div>
+    </ResultsContainer>
+    );
+  } else {
+    return (
     <ResultsContainer>
       <SectionHeader title={`Previous Race Standings (${raceVenue})`} onClick={() => setOpen(!open)}/>
       <Collapse in={open} timeout="auto" unmountOnExit>
@@ -72,6 +73,10 @@ function RaceResults() {
       </Collapse>
     </ResultsContainer>
   );
+  }
+
+  
+
 }
 
 export default RaceResults;

@@ -35,39 +35,42 @@ function DriverStandings() {
 
   if (isLoading) {
     return <CircularProgress />;
-  }
-
-  if (error) {
-    return <div>Error fetching: {error} - The season just started or a network error occurred, probably.</div>;
-  }
-
-  return (
+  } else if (error) {
+    return(
     <DriverStandingsContainer>
       <SectionHeader title="Drivers' Point Rankings" onClick={() => setOpen(!open)} open={open} />
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Position</TableCell>
-                <TableCell>Driver</TableCell>
-                <TableCell>Points</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {driverStandings.map((driver, driverId) => (
-                <TableRow key={driverId}>
-                  <TableCell>{driver.position}</TableCell>
-                  <TableCell>{driver.Driver.givenName} {driver.Driver.familyName}</TableCell>
-                  <TableCell>{driver.points}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Collapse>
+      <div>Error fetching: {error} - The season just started or a network error occurred, probably.</div>
     </DriverStandingsContainer>
-  );
+    );
+  } else {
+    return (
+      <DriverStandingsContainer>
+        <SectionHeader title="Drivers' Point Rankings" onClick={() => setOpen(!open)} open={open} />
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Position</TableCell>
+                  <TableCell>Driver</TableCell>
+                  <TableCell>Points</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {driverStandings.map((driver, driverId) => (
+                  <TableRow key={driverId}>
+                    <TableCell>{driver.position}</TableCell>
+                    <TableCell>{driver.Driver.givenName} {driver.Driver.familyName}</TableCell>
+                    <TableCell>{driver.points}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Collapse>
+      </DriverStandingsContainer>
+    );
+  }
 }
 
 export default DriverStandings;

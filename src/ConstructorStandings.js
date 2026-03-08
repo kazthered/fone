@@ -33,41 +33,44 @@ function ConstructorStandings() {
     fetchConstructorStandings();
   }, []);
 
-    if (isLoading) {
-      return <CircularProgress />;
-    }
-  
-    if (error) {
-      return <div>Error fetching: {error} - The season just started or a network error occurred, probably.</div>;
-    }
-
-  return (
+  if (isLoading) {
+    return <CircularProgress />;
+  } else if (error) {
+    return(
     <StandingsContainer>
       <SectionHeader title="Constructors' Point Rankings" onClick={() => setOpen(!open)} />
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Position</TableCell>
-                <TableCell>Constructor</TableCell>
-                <TableCell>Points</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {constructorStandings.map((constructor, constructorId) => (
-                <TableRow key={constructorId}>
-                  <TableCell>{constructor.position}</TableCell>
-                  <TableCell>{constructor.Constructor.name}</TableCell>
-                  <TableCell>{constructor.points}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Collapse>
+      <div>Error fetching: {error} - The season just started or a network error occurred, probably.</div>
     </StandingsContainer>
-  );
+    );
+  } else {
+    return (
+      <StandingsContainer>
+        <SectionHeader title="Constructors' Point Rankings" onClick={() => setOpen(!open)} />
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Position</TableCell>
+                  <TableCell>Constructor</TableCell>
+                  <TableCell>Points</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {constructorStandings.map((constructor, constructorId) => (
+                  <TableRow key={constructorId}>
+                    <TableCell>{constructor.position}</TableCell>
+                    <TableCell>{constructor.Constructor.name}</TableCell>
+                    <TableCell>{constructor.points}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Collapse>
+      </StandingsContainer>
+    );
+  }
 }
 
 export default ConstructorStandings;
