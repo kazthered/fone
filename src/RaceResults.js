@@ -19,9 +19,9 @@ function RaceResults() {
       try {
         const data = await fetch('https://api.jolpi.ca/ergast/f1/2026/results/');
         const jsonData = await data.json();
-        if (jsonData.MRData.RaceTable !== undefined) {
-          setRaceResults(jsonData.MRData.RaceTable.Races.at(0).Results);
-          setRaceVenue(jsonData.MRData.RaceTable.Races.at(0).Circuit.circuitName);
+        if (jsonData.MRData.RaceTable.Races.length > 0) {
+          setRaceResults(jsonData.MRData.RaceTable.Races[0].Results);
+          setRaceVenue(jsonData.MRData.RaceTable.Races[0].Circuit.circuitName);
         } else {
           setError('There are no race results available at this time.');
         }
@@ -44,7 +44,7 @@ function RaceResults() {
         <Table table-layout="fixed">
           <TableHead>
             <TableRow >
-              <TableCell>Error Fetching - The season just started or a network error occurred, probably.</TableCell>
+              <TableCell>Error Fetching - {error} - The season just started or a network error occurred, probably.</TableCell>
             </TableRow>
           </TableHead>
         </Table>
