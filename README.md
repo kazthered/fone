@@ -1,5 +1,12 @@
+hobby F1 stat tracking app.
+
+do whatever you want with it. 
+
+installing:
+
+`npm install`
+
 running: 
 `npm run start`
 
-sp thanks: 
-https://documenter.getpostman.com/view/11586746/SztEa7bL#intro
+sp thanks: https://api.jolpi.ca/ergast/
