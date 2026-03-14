@@ -43,7 +43,7 @@ function ConstructorStandings() {
         <Table table-layout="fixed">
           <TableHead>
             <TableRow >
-              <TableCell>Error fetching - The season just started or a network error occurred, probably.</TableCell>
+              <TableCell>Error Fetching - {error} - The season just started or a network error occurred, probably.</TableCell>
             </TableRow>
           </TableHead>
         </Table>
