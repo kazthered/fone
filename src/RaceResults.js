@@ -11,7 +11,7 @@ function RaceResults() {
   const [raceVenue, setRaceVenue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   useEffect(() => {
     const fetchRaceResults = async () => {
@@ -42,9 +42,11 @@ function RaceResults() {
       <SectionHeader title={`Previous Race Standings (Unknown Venue)`} onClick={() => setOpen(!open)}/>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Table table-layout="fixed">
-          <TableRow >
-            <TableCell>Error fetching: {error} - The season just started or a network error occurred, probably.</TableCell>
-          </TableRow>
+          <TableHead>
+            <TableRow >
+              <TableCell>Error Fetching - The season just started or a network error occurred, probably.</TableCell>
+            </TableRow>
+          </TableHead>
         </Table>
       </Collapse>
     </ResultsContainer>

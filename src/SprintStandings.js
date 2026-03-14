@@ -42,9 +42,11 @@ function SprintResults() {
       <SectionHeader title={`Previous Sprint Standings (Unknown Venue)`} onClick={() => setOpen(!open)}/>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Table table-layout="fixed">
-          <TableRow >
-            <TableCell>Error fetching: {error} - The season just started or a network error occurred, probably.</TableCell>
-          </TableRow>
+          <TableHead>
+            <TableRow >
+              <TableCell>Error fetching - The season just started or a network error occurred, probably.</TableCell>
+            </TableRow>
+          </TableHead>
         </Table>
       </Collapse>
     </ResultsContainer>

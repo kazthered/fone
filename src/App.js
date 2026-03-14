@@ -54,9 +54,9 @@ const App = memo(function App() {
           <ErrorBoundary>
             <Suspense fallback={<CircularProgress sx={{ margin: 'auto', padding: 2 }} />}>
               <RaceResults />
+              <SprintResults />
               <DriverStandings />
               <ConstructorStandings />
-              <SprintResults />
             </Suspense>
           </ErrorBoundary>
         </div>
