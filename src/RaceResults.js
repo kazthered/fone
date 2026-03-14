@@ -11,7 +11,7 @@ function RaceResults() {
   const [raceVenue, setRaceVenue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchRaceResults = async () => {
