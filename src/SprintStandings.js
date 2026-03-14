@@ -17,11 +17,11 @@ function SprintResults() {
     const fetchSprintResults = async () => {
       setError(null);
       try {
-        const data = await fetch('https://api.jolpi.ca/ergast/f1/2026/results/');
+        const data = await fetch('https://api.jolpi.ca/ergast/f1/2026/sprint/');
         const jsonData = await data.json();
-        if (typeof(jsonData.MRData.SprintTable) !== 'undefined') {
-          setSprintResults(jsonData.MRData.SprintTable.Sprints.at(0).Results);
-          setSprintVenue(jsonData.MRData.SprintTable.Sprints.at(0).Circuit.circuitName);
+        if (typeof(jsonData.MRData.RaceTable) !== 'undefined') {
+          setSprintResults(jsonData.MRData.RaceTable.Races.at(0).Results);
+          setSprintVenue(jsonData.MRData.RaceTable.Races.at(0).Circuit.circuitName);
         } else {
           setError('There are no sprint results available at this time.');
         }
@@ -39,7 +39,7 @@ function SprintResults() {
   } else if (error) {
     return(
     <ResultsContainer>
-      <SectionHeader title={`Previous Sprint Standings (${typeof(sprintVenue) !== 'undefined' ? sprintVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
+      <SectionHeader title={`Previous Sprint Standings (Unknown Venue)`} onClick={() => setOpen(!open)}/>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Table table-layout="fixed">
           <TableRow >
