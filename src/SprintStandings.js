@@ -20,7 +20,7 @@ function SprintResults() {
         const data = await fetch('https://api.jolpi.ca/ergast/f1/2026/sprint/');
         const jsonData = await data.json();
         if (jsonData.MRData.RaceTable.Races.length > 0) {
-          setSprintResults(jsonData.MRData.RaceTable.Races[0].Results);
+          setSprintResults(jsonData.MRData.RaceTable.Races[0].SprintResults);
           setSprintVenue(jsonData.MRData.RaceTable.Races[0].Circuit.circuitName);
         } else {
           setError('There are no sprint results available at this time.');

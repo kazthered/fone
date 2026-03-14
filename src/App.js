@@ -1,11 +1,11 @@
 import { memo, Suspense, lazy } from 'react';
 import { AppBar, Toolbar, createTheme, ThemeProvider, Typography, CssBaseline, CircularProgress } from '@mui/material';
 import ErrorBoundary from './ErrorBoundary';
-import SprintResults from './SprintStandings';
 
 const DriverStandings = lazy(() => import('./DriverStandings'));
 const RaceResults = lazy(() => import('./RaceResults'));
 const ConstructorStandings = lazy(() => import('./ConstructorStandings'));
+const SprintResults = lazy(() => import('./SprintStandings'));
 
 const darkTheme = createTheme({
   palette: {
