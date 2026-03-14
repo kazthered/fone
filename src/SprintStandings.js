@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, CircularProgress, Collapse } from '@mui/material';
 import SectionHeader from './SectionHeader';
 
@@ -19,7 +19,7 @@ function SprintResults() {
       try {
         const data = await fetch('https://api.jolpi.ca/ergast/f1/2026/results/');
         const jsonData = await data.json();
-        if (jsonData.MRData.SprintTable !== undefined) {
+        if (typeof(jsonData.MRData.SprintTable) !== 'undefined') {
           setSprintResults(jsonData.MRData.SprintTable.Sprints.at(0).Results);
           setSprintVenue(jsonData.MRData.SprintTable.Sprints.at(0).Circuit.circuitName);
         } else {
@@ -39,7 +39,7 @@ function SprintResults() {
   } else if (error) {
     return(
     <ResultsContainer>
-      <SectionHeader title={`Previous Sprint Standings (${sprintVenue == undefined ? sprintVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
+      <SectionHeader title={`Previous Sprint Standings (${typeof(sprintVenue) !== 'undefined' ? sprintVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Table table-layout="fixed">
           <TableRow >
@@ -52,7 +52,7 @@ function SprintResults() {
   } else {
     return (
     <ResultsContainer>
-      <SectionHeader title={`Previous Sprint Standings (${sprintVenue !== undefined ? sprintVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
+      <SectionHeader title={`Previous Sprint Standings (${typeof(sprintVenue) !== 'undefined' ? sprintVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Table table-layout="fixed">
           <TableHead>
@@ -80,9 +80,6 @@ function SprintResults() {
     </ResultsContainer>
   );
   }
-
-  
-
 }
 
 export default SprintResults;

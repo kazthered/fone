@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, CircularProgress, Collapse } from '@mui/material';
 import SectionHeader from './SectionHeader';
 
@@ -39,7 +39,7 @@ function RaceResults() {
   } else if (error) {
     return(
     <ResultsContainer>
-      <SectionHeader title={`Previous Race Standings (${raceVenue == undefined ? raceVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
+      <SectionHeader title={`Previous Race Standings (${typeof(raceVenue) !== 'undefined' ? raceVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Table table-layout="fixed">
           <TableRow >
@@ -52,7 +52,7 @@ function RaceResults() {
   } else {
     return (
     <ResultsContainer>
-      <SectionHeader title={`Previous Race Standings (${raceVenue !== undefined ? raceVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
+      <SectionHeader title={`Previous Race Standings (${typeof(raceVenue) !== 'undefined' ? raceVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Table table-layout="fixed">
           <TableHead>
@@ -80,9 +80,6 @@ function RaceResults() {
     </ResultsContainer>
   );
   }
-
-  
-
 }
 
 export default RaceResults;

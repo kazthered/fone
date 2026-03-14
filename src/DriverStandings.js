@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, CircularProgress, Collapse } from '@mui/material';
 import SectionHeader from './SectionHeader';
 
@@ -19,7 +19,7 @@ function DriverStandings() {
       try {
         const data = await fetch('https://api.jolpi.ca/ergast/f1/2026/driverstandings/?format=json');
         const jsonData = await data.json();
-        if (jsonData.MRData.StandingsTable !== undefined) {
+        if (typeof(jsonData.MRData.StandingsTable) !== 'undefined') {
           setDriverStandings(jsonData.MRData.StandingsTable.StandingsLists[0].DriverStandings);
         } else {
           setError('There are no driver standings available at this time.');
