@@ -6,24 +6,24 @@ function ResultsContainer({ children }) {
   return(<TableContainer>{children}</TableContainer>);
 }
 
-function RaceResults() {
-  const [raceResults, setRaceResults] = useState([]);
-  const [raceVenue, setRaceVenue] = useState([]);
+function SprintResults() {
+  const [sprintResults, setSprintResults] = useState([]);
+  const [sprintVenue, setSprintVenue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const fetchRaceResults = async () => {
+    const fetchSprintResults = async () => {
       setError(null);
       try {
         const data = await fetch('https://api.jolpi.ca/ergast/f1/2026/results/');
         const jsonData = await data.json();
-        if (jsonData.MRData.RaceTable !== undefined) {
-          setRaceResults(jsonData.MRData.RaceTable.Races.at(0).Results);
-          setRaceVenue(jsonData.MRData.RaceTable.Races.at(0).Circuit.circuitName);
+        if (jsonData.MRData.SprintTable !== undefined) {
+          setSprintResults(jsonData.MRData.SprintTable.Sprints.at(0).Results);
+          setSprintVenue(jsonData.MRData.SprintTable.Sprints.at(0).Circuit.circuitName);
         } else {
-          setError('There are no race results available at this time.');
+          setError('There are no sprint results available at this time.');
         }
       } catch (error) {
         setError(error.message);
@@ -31,7 +31,7 @@ function RaceResults() {
         setIsLoading(false);
       }
     };
-    fetchRaceResults();
+    fetchSprintResults();
   }, []);
 
   if (isLoading) {
@@ -39,7 +39,7 @@ function RaceResults() {
   } else if (error) {
     return(
     <ResultsContainer>
-      <SectionHeader title={`Previous Race Standings (${raceVenue == undefined ? raceVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
+      <SectionHeader title={`Previous Sprint Standings (${sprintVenue == undefined ? sprintVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Table table-layout="fixed">
           <TableRow >
@@ -52,7 +52,7 @@ function RaceResults() {
   } else {
     return (
     <ResultsContainer>
-      <SectionHeader title={`Previous Race Standings (${raceVenue !== undefined ? raceVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
+      <SectionHeader title={`Previous Sprint Standings (${sprintVenue !== undefined ? sprintVenue : 'Unknown Venue'})`} onClick={() => setOpen(!open)}/>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Table table-layout="fixed">
           <TableHead>
@@ -65,7 +65,7 @@ function RaceResults() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {raceResults.map((result, number) => (
+            {sprintResults.map((result, number) => (
               <TableRow key={number}>
                 <TableCell>{result.position}</TableCell>
                 <TableCell>{result.Driver.givenName} {result.Driver.familyName}</TableCell>
@@ -85,4 +85,4 @@ function RaceResults() {
 
 }
 
-export default RaceResults;
+export default SprintResults;

@@ -39,7 +39,13 @@ function ConstructorStandings() {
     return(
     <StandingsContainer>
       <SectionHeader title="Constructors' Point Rankings" onClick={() => setOpen(!open)} />
-      <div>Error fetching: {error} - The season just started or a network error occurred, probably.</div>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <Table table-layout="fixed">
+          <TableRow >
+            <TableCell>Error fetching: {error} - The season just started or a network error occurred, probably.</TableCell>
+          </TableRow>
+        </Table>
+      </Collapse>
     </StandingsContainer>
     );
   } else {
